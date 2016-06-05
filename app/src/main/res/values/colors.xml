@@ -1,0 +1,38 @@
+<resources>
+	<color name="dark_gray">#333333</color>
+	<color name="light_gray">#dddddd</color>
+	<color name="red_dark">#660000</color>
+	<color name="red_fezer">#FFEEEE</color>
+	<color name="green_dark">#003300</color>
+	<color name="green_fezer">#66ffcc</color>
+	<color name="olive_dark">#808000</color>
+	<color name="olive_fezer">#EEE8AA</color>
+		<color name="orange_dark">#ff3300</color>
+	<color name="orange_fezer">#FFE4E1</color>
+		<color name="blue_dark">#000066</color>
+	<color name="blue_fezer">#EEEEFF</color>
+	<color name="white_pere">#FFFFFF</color>
+	<color name="orenge_select">#F69820</color>
+	<color name="green_select">#B1DC84</color>
+	<!-- 	#B1DC84				0xFFB1DC84 -->
+	<!-- 既読時の背景色（薄水色）-->
+    <color name="status_item_background_read">#E5F2F7</color>
+
+    <!-- 未読時の背景色（白色）		B1DC84		 -->
+    <color name="status_item_background_unread">#FFFFFF</color>
+
+	<color name="white">#ffffff</color>
+	<color name="green">#94cb08</color>
+	<color name="green_android1">#93c431</color>
+	<color name="green_android2">#86b32d</color>
+	<color name="green_android2_r">#E7FAE0</color>
+		<color name="blueGreen">#00ffff</color>
+	<color name="red">#cc1111</color>
+	<color name="red2">#aa0000</color>
+	<color name="red2_r">#FCF6FB</color>
+		<color name="black">#000000</color>
+	<color name="cell1">#f0f</color>
+	<color name="cell2">#0f0</color>
+
+
+</resources>

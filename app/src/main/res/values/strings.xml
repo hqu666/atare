@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="banner_ad_unit_id">ca-app-pub-3146425308522831/2817293900</string>
+
+	<string name="nend_apiKey">c5cb8bc474345961c6e7a9778c947957ed8e1e4f</string>
+	<string name="nend_spotID">3174</string>
+	<!--
+画面左下
+	<string name="nend_apiKey">591d766579ac29892dd24ee80beefb0e75ec5a03</string>
+	<string name="nend_spotID">468375</string>
+画面下部  破棄
+	<string name="nend_apiKey">9f317f03b6d2b69e104dc43950fb6190eb39b451</string>
+	<string name="nend_spotID">458687</string>
+test
+	<string name="nend_apiKey">c5cb8bc474345961c6e7a9778c947957ed8e1e4f</string>
+	<string name="nend_spotID">3174</string>
+	 -->
+
+			<string name="hello">Hello World, AtarekunnActivity!</string>
+	<string name="app_name">Atare君</string>
+	<string name="comon_max">最大</string>
+	<string name="main_tf_hyoujisuu">表示する乱数の数</string>
+		<string name="gr1_name">乱数一発！速攻表示</string>
+	<string name="gr2_name">乱数累積</string>
+	<string name="main_tf_kaimaderuiseki">回まで累積</string>
+	<string name="main_tf_syoki">Atare君は「予想」なんてできません。\n数字を思いつかない時に「お手伝い」ができるだけでございます。\n\n現在の設定状況\n</string>
+	<string name="main_tf_syoki1">くじの種類は</string>
+
+	<string name="kujiSyurui">kujiSyurui</string>
+	<string name="kujiSyuruiTitol">くじの種類</string>
+	<string name="power_ball_name">Power Ball(米)</string>
+	<string name="mega_millions">Mega Millions(米)</string>
+	<string name="ruro_mllions_name">Euro Millions</string>
+	<string name="mar_six_name">六合彩（香港;マークシックス）	</string>
+	<string name="loto7_name">ロト7</string>
+	<string name="loto6_name">ロト6</string>
+	<string name="mini_loto_name">ミニロト</string>
+	<string name="num3_name">ナンバーズ3</string>
+	<string name="num4_name">ナンバーズ4</string>
+	<string name="val_val_titol">基本部の個数</string>
+	<string name="randumStart_val_titol">開始値</string>
+	<string name="randumEnd_val_titol">終端値</string>
+
+	<string name="SPN_val_titol">拡張部の個数（メガボールやパワーボール、ラッキースターナンバーなど）</string>
+	<string name="prefTitol">あたれ君の設定</string>
+	<string name="kurikaesi_val_titol">繰り返し</string>
+	<string name="shyougouURL">shyougouURL</string>
+	<string name="shyougouURL_titol">参照webページ</string>
+	<string name="kujisyuListrTaitl">くじの種類</string>
+	<string name="kujisyuruiMessege">乱数で予想するくじの種類を選択してください。</string>
+	<string name="sonota">その他</string>
+	<string name="prefUseDlogTitol">プログレスダイアログの表示</string>
+	<string name="ruisekiProgMsg1">いづれかの数字が</string>
+	<string name="ruisekiProgMsg2">回出るまで繰り返し</string>
+			<string name="menu_item_sousa">操作</string>
+	<string name="menu_item_sousa_kekkaCheck">結果発表webへ</string>
+	<string name="menu_item_sousa_ippatu">一発表示</string>
+	<string name="menu_item_sousa_ruisek">乱数累積</string>
+	<string name="menu_item_sonota">その他</string>
+	<string name="menu_item_sonota_help">ヘルプ表示</string>
+	<string name="menu_item_sonota_settei">設定</string>
+	<string name="menu_item_sonota_settei_syoukyo">設定消去</string>
+	<string name="menu_item_sonota_end">終了	</string>
+	<string name="_1_2_3_4_5_43">"  1 ,  2 ,  3 ,  4 ,  5 , 43"</string>
+	<string name="kounyuu_cyuui"> 日本国内で海外の宝くじは購入できません。\n雰囲気だけお楽しみください。</string><!-- -->
+	<string name="comon_tukamaru">購入すると捕まります</string><!-- -->
+	<string name="prefJufuku">本番号と予備番号の重複</string><!-- -->
+	<string name="comon_ok">OK</string><!-- -->
+	<string name="kurikaesisousuu">繰返し総数</string><!-- -->
+	<string name="kaicyuu">回中</string><!-- -->
+	<string name="syoyoujikan">所要時間　</string><!-- -->
+	<string name="comon_ruiseki">累積</string><!-- -->
+	<string name="menu_item_sousa_webrecord">現在のwebページを記録</string>
+	<string name="wrd_titol">タイトル</string>
+	<string name="wrd_msg">で表示されるwebページを現在表示しているページに設定します。</string>
+	<string name="wrd_url">URL</string>
+	<string name="wrd_scale">スケール</string>
+	<string name="comon_jikkou">実行</string>
+	<string name="comon_cyuusi">中止</string>
+	<string name="menu_item_sousa_webkennsaku">の検索</string>
+
+	<string name="pref_urlTitol">表示するwebページ</string>
+	<string name="pref_urlMessege">このUrlで表示します</string>
+	<string name="pref_web_zen">全画面表示</string>
+		<string name="pref_w_hyouji_bairitu_lTitol">webページの表示倍率</string>
+	<string name="wrd_msg2">現在の設定</string>
+	<string name="pref_f_name">atare_p</string>
+	<string name="pref_dPadAri">ダイヤルキー</string>
+    <string name="comon_tukau">使う</string>
+    <string name="comon_tukawanai">使わない</string>
+    <string name="kuji_table">kuji_table</string>
+    <string name="kuji_file">kuji.db</string>
+	<string name="menu_item_sonota_syoukyo">設定ファイルを作り直しました</string>
+
+	<string name="kujiset_namae">くじの名称</string>
+	<string name="kujiset_honnsuuji">本数字</string>
+	<string name="kujiset_tokubann">特番</string>
+		<string name="kujiset_jyuuhuku">重複</string>
+		<string name="kujiset_tuikka_msg">くじの名称を変更する事で新しいくじとして登録します。</string>
+	<string name="menu_item_kuji_settei">くじの設定</string>
+	<string name="menu_item_kuji_msg">以下の変更を反映しますか？</string>
+		<string name="kujiset_tuikka_msg2">を新しいくじとして登録します。</string>
+    <string name="comon_koumoku">項目</string>
+	<string name="comon_hennkou">変更</string>
+	<string name="comon_sakujyo">削除</string>
+	<string name="comon_kamaimasennka">構いませんか？</string>
+
+</resources>

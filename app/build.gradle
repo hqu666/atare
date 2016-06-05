@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "com.hijiyama_koubou.atare_kun"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionName "1.3.2"
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"      //JUnit4対応
+        multiDexEnabled true        //eferences in a .dex file cannot exceed 64K.”の対策
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+        jniDebug {
+            initWith(buildTypes.debug)
+            jniDebuggable true                              //Build type isn't JNI debuggable 対策
+        }
+    }
+    buildscript {
+        repositories {
+            jcenter()
+        }
+
+        dependencies {
+//            androidTestCompile 'com.android.support.test:runner:0.4'      //JUnit4対応
+//            androidTestCompile 'com.android.support.test:rules:0.4'      //JUnit4対応
+            //     classpath 'com.android.tools.build:gradle:2.1.0'
+            //     classpath fileTree(dir: 'dirname', include: '*.jar')
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "2g"        // GC overhead limit exceeded対策
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    // compile 'com.android.support:appcompat-v7:23.4.0'
+    //    compile files('libs/android-binding.ant.jar')
+    //    compile 'net.nend.android:nend-sdk:+'    // nendSDK
+    //eferences in a .dex file cannot exceed 64K.”の対策
+    compile 'com.google.android.gms:play-services:9.0.1'
+    compile 'com.android.support:support-v4:24.0.0-beta1'
+    compile 'com.android.support:design:24.0.0-beta1'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0-beta1'
+    compile 'com.firebase:firebase-client-android:2.3.1'
+}

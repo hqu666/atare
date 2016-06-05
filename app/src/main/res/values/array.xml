@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="kujiSyuArray">
+		<item>@string/power_ball_name</item>
+		<item>@string/mega_millions</item>
+		<item>@string/ruro_mllions_name</item>
+		<item>@string/mar_six_name</item>
+		<item>@string/loto7_name</item>
+		<item>@string/loto6_name</item>
+		<item>@string/mini_loto_name</item>
+		<item>@string/num3_name</item>
+		<item>@string/num4_name</item>
+		<item>@string/sonota</item>
+	</string-array>
+
+</resources>

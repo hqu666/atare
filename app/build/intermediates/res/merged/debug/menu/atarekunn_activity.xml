@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item
+		android:id="@+id/menu_sousa"
+		android:title="@string/menu_item_sousa">
+		<menu>
+			<item android:id="@+id/menu_sousa_ippatu" android:title="@string/menu_item_sousa_ippatu" /><item android:id="@+id/menu_sousa_ruiseki" android:title="@string/menu_item_sousa_ruisek" /><item
+				android:id="@+id/menu_sousa_webrecord"
+				android:title="@string/menu_item_sousa_webrecord"/>
+		    			<item
+				android:id="@+id/menu_sousa_kekkaCheck"
+				android:title="@string/menu_item_sousa_kekkaCheck"/>
+			
+			
+		</menu>
+	</item>
+	<item
+		android:id="@+id/menu_sonota"
+		android:title="@string/menu_item_sonota">
+		<menu>
+			<item
+				android:id="@+id/menu_sonota_settei"
+				android:title="@string/menu_item_sonota_settei"/>
+			<item
+				android:id="@+id/menu_sonota_settei_syoukyo"
+				android:title="@string/menu_item_sonota_settei_syoukyo"/>
+			<item
+				android:id="@+id/menu_sonota_help"
+				android:title="@string/menu_item_sonota_help"/>
+			<item
+				android:id="@+id/menu_sonota_syuuryou"
+				android:title="@string/menu_item_sonota_end"/>
+		</menu>
+	</item>
+
+</menu>

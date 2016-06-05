@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title= "@string/prefTitol" >
+
+	<EditTextPreference
+		 android:key="pref_kurikaesi"
+		android:title="@string/kurikaesi_val_titol"
+		android:dialogTitle="@string/kurikaesi_val_titol"
+		android:inputType="number"
+		/>
+
+	<CheckBoxPreference
+	    android:defaultValue="true"
+	    android:key="prefUseDlog_ch"
+	    android:title="@string/prefUseDlogTitol"
+	    android:summaryOff="@string/comon_tukawanai"
+	    android:summaryOn="@string/comon_tukau"
+	    android:enabled="true" android:selectable="true"
+	    />
+
+	<CheckBoxPreference android:defaultValue="false"
+	    android:key="dPadAri"
+	    android:title="@string/pref_dPadAri"
+	    android:enabled="false"
+	    android:summaryOff="@string/comon_tukawanai" android:summaryOn="@string/comon_tukau"
+	    />
+
+
+</PreferenceScreen>
