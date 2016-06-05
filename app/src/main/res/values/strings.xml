@@ -105,5 +105,8 @@ test
 	<string name="comon_hennkou">変更</string>
 	<string name="comon_sakujyo">削除</string>
 	<string name="comon_kamaimasennka">構いませんか？</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
 
+	<string name="action_settings">Settings</string>
 </resources>

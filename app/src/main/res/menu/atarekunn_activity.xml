@@ -4,10 +4,13 @@
 		android:id="@+id/menu_sousa"
 		android:title="@string/menu_item_sousa">
 		<menu>
-			<item android:id="@+id/menu_sousa_ippatu" android:title="@string/menu_item_sousa_ippatu" /><item android:id="@+id/menu_sousa_ruiseki" android:title="@string/menu_item_sousa_ruisek" /><item
+			<item android:id="@+id/kujiSyuruiTitol" android:title="@string/kujiSyuruiTitol"/>
+			<item android:id="@+id/kurikaesi_val_titol" android:title="@string/kurikaesi_val_titol" />
+			<item android:id="@+id/main_tf_hyoujisuu" android:title="@string/main_tf_hyoujisuu" />
+			<item
 				android:id="@+id/menu_sousa_webrecord"
 				android:title="@string/menu_item_sousa_webrecord"/>
-		    			<item
+		    <item
 				android:id="@+id/menu_sousa_kekkaCheck"
 				android:title="@string/menu_item_sousa_kekkaCheck"/>
 			

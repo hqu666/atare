@@ -14,4 +14,23 @@
 		<item>@string/sonota</item>
 	</string-array>
 
+
+	<string-array name="rab_iti">
+		<item>@string/menu_item_sousa_ippatu</item>
+		<item>@string/menu_item_sousa_ruisek</item>
+	</string-array>
+
+	<string-array name="mar6_kounyuu">
+		<item>"6"</item>
+		<item>"7"</item>
+		<item>"8"</item>
+		<item>"9"</item>
+		<item>"10"</item>
+		<item>"11"</item>
+		<item>"12"</item>
+		<item>"13"</item>
+		<item>"14"</item>
+		<item>"15"</item>
+		<item>"16"</item>
+	</string-array>
 </resources>

@@ -1,4 +1,8 @@
 <resources>
+	<color name="colorPrimary">#3F51B5</color>
+	<color name="colorPrimaryDark">#303F9F</color>
+	<color name="colorAccent">#FF4081</color>
+
 	<color name="dark_gray">#333333</color>
 	<color name="light_gray">#dddddd</color>
 	<color name="red_dark">#660000</color>
@@ -34,5 +38,7 @@
 	<color name="cell1">#f0f</color>
 	<color name="cell2">#0f0</color>
 
-
+	<color name="txt_main">#000000</color>
+	<color name="txt_sub">#999999</color>
+	<color name="txt_reverse">#ffffff</color>
 </resources>
