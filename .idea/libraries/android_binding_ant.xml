@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="android-binding.ant">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/android-binding.ant.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
