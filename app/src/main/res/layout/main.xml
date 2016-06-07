@@ -21,6 +21,27 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/atarekunn_activity"/>
+        >
+    <!--app:menu="@menu/atarekunn_activity"-->
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="176dp">
+        <!-- The navigation drawer -->
+
+            <ExpandableListView
+                android:id="@+id/left_drawer"
+                android:layout_width="283dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|top"
+                 android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+        </FrameLayout>
+    </android.support.design.widget.NavigationView>
+
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,7 +1,6 @@
 package com.hijiyama_koubou.atare_kun;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,10 +16,16 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -58,10 +63,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-//android.view.WindowLeaked: Activity com.hijiyama_koubou.atare_kun.AtarekunnActivity has leaked window com.android.internal.policy.impl.PhoneWindow$DecorView{42924fc0 V.E..... R.....I. 0,0-0,0} that was originally added
 
-public class AtarekunnActivity extends Activity  implements plogTaskCallback{			//, View.OnKeyListener			 implements plogTaskCallback
+public class AtarekunnActivity extends AppCompatActivity implements  plogTaskCallback{
+	//, View.OnKeyListener			 implements plogTaskCallback  NavigationView.OnNavigationItemSelectedListener
 	// extends Fragment		Activity , View.OnKeyListener		 View.OnClickListener , View.OnLongClickListener ,
+	private DrawerLayout drawer;
+	private ExpandableListView drawerList;
+	private ActionBarDrawerToggle actionBarDrawerToggle;
+
 	public Spinner maxValSP;			//六合彩用の可変個数スピナー
 	public Spinner kujisyuSP;			//くじの種類スピナー
 	public Spinner repetSp;				//繰り返し選択スピナー
@@ -80,6 +89,7 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 	public FrameLayout frag_aria;	//Fragmentを読み込むFrameLayout
 	public String sarchUrlOrg = "https://www.google.co.jp/";
 
+
 	public long startTime;
 	public SimpleDateFormat sdf_mss = new SimpleDateFormat("mm:ss SSS");		//02;03 414=123414
 
@@ -91,8 +101,8 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 	public Context rContext;
 	public Locale locale;	// アプリで使用されているロケール情報を取得
 	public SharedPreferences sharedPref;
-	public Editor myEditor ;
-	public static int APIL=Build.VERSION.SDK_INT;	//APIレベル
+	public SharedPreferences.Editor myEditor;
+	public static int APIL= Build.VERSION.SDK_INT;	//APIレベル
 	public int kurikaesi_val=100;													//繰り返し判定数
 	public boolean prefUseDlog=true;											//ダイアログの使用/未使用	true	false
  	public boolean dPadAri=false;							//ダイヤルの有無
@@ -175,15 +185,6 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 	public final int PROGRESS_SPIN=MENU_END+100;
 	public final int PROGRESS_HORIZ=PROGRESS_SPIN+1;
 
-/*	Error:Exception in thread "pool-2-thread-3"
-	Error:UNEXPECTED TOP-LEVEL ERROR:
-	Error:java.lang.OutOfMemoryError: GC overhead limit exceeded
-	Error:java.lang.OutOfMemoryError: GC overhead limit exceeded
-	:app:transformClassesWithDexForDebug FAILED
-	Error:Execution failed for task ':app:transformClassesWithDexForDebug'.
-	com.android.build.api.transform.TransformException: com.android.ide.common.process.ProcessException:
-	java.util.concurrent.ExecutionException: com.android.ide.common.process.ProcessException: org.gradle.process.internal.ExecException: Process 'command 'C:\Program Files\Java\jdk1.8.0_91\bin\java.exe'' finished with non-zero exit value 3
-*/
 
 /// 汎用関数 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public boolean isNum(String motoStr){		//数字ならtrue
@@ -231,13 +232,13 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 	@Override
 	public boolean onPrepareOptionsMenu(Menu flMenu) {			//表示直前に行う非表示や非選択設定
 		//	//Log.d("onPrepareOptionsMenu","NakedFileVeiwActivity;mlMenu="+flMenu);
-		flMenu.findItem(R.id.menu_sousa_webrecord).setEnabled(true);		//現在のwebページを記録
-		flMenu.findItem(R.id.menu_sousa_ippatu).setEnabled(true);		//結果確認	MENU_kekkaCheck
-		flMenu.findItem(R.id.menu_sousa_ippatu).setEnabled(true);		//一発表示	MENU_ippatu
-		flMenu.findItem(R.id.menu_sousa_ruiseki).setEnabled(true);		//乱数累積	MENU_ruiseki
+		flMenu.findItem(R.id.kujiSyuruiTitol).setEnabled(true);		    //くじの種類
+		flMenu.findItem(R.id.kurikaesi_val_titol).setEnabled(true);		//繰り返し
+		flMenu.findItem(R.id.main_tf_hyoujisuu).setEnabled(true);		//表示する乱数（マーシックス）
+		flMenu.findItem(R.id.menu_sousa_webrecord).setEnabled(true);	//現在のwebページを記録
+		flMenu.findItem(R.id.menu_sousa_kekkaCheck).setEnabled(true);	//結果表示webへ
 
 		flMenu.findItem(R.id.menu_sonota_settei).setVisible(true);		//設定	MENU_SETTEI
-		flMenu.findItem(R.id.menu_sonota_settei).setEnabled(true);		//設定	MENU_SETTEI
 		flMenu.findItem(R.id.menu_sonota_help).setVisible(true);		//ヘルプ表示	MENU_HELP
 		flMenu.findItem(R.id.menu_sonota_syuuryou).setVisible(true);	//終了	MENU_END
 		return true;
@@ -251,20 +252,24 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 
 			nowSelectMenu = item.getItemId();							//現在選ばれているメニュ
 			switch (nowSelectMenu) {
-			case R.id.menu_sousa_webrecord:				//現在のwebページを記録
-				webRecord();			//表示されているwebページの設定保存
-				return true;
-			case R.id.menu_sousa_ippatu:					//一発表示	MENU_ippatu
-	//			wriNum(setNRNum(randumStart_val,randumEnd_val,val_val));				//一発表示
-				return true;
-			case R.id.menu_sousa_ruiseki:					//乱数累積 MENU_ruiseki
-				ruiseki();						//乱数の累積
-				return true;
+				case R.id.kujiSyuruiTitol:					//くじの種類
+					//			wriNum(setNRNum(randumStart_val,randumEnd_val,val_val));				//一発表示
+					return true;
+				case R.id.kurikaesi_val_titol:				//繰り返し
+					ruiseki();						//乱数の累積
+					return true;
+				case R.id.main_tf_hyoujisuu:			//表示する乱数（マーシックス）
+					//	ruiseki();						//乱数の累積
+					return true;//
+				case R.id.menu_sousa_webrecord:				//現在のwebページを記録
+					webRecord();			//表示されているwebページの設定保存
+					return true;
 			case R.id.menu_sousa_kekkaCheck:				//果確認	MENU_kekkaCheck
 				intentWV = new Intent(AtarekunnActivity.this,wKit.class);			//webで
 				intentWV.putExtra("dataURI",shyougouURL);							//照合URL
 				startActivity(intentWV);
 				return true;
+
 			case R.id.menu_sonota_settei:						//).setVisible(true);		//設定	MENU_SETTEI
 				delPrif();		//☆暫定対策；；プリファレンスの内容削除
 				Intent intentPRF = new Intent(AtarekunnActivity.this,MyPreferences.class);			//プリファレンス
@@ -279,7 +284,7 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 				return true;
 			case R.id.menu_sonota_settei_syoukyo:						//, 0,CTM_SETTEI_DEll);		//設定消去";	MENU_SETTEI_DEll
 				delPrif();		//プリファレンスの内容削除
-				String fn = this.getApplicationContext().getString(R.string.kuji_file);		//kuji.db
+				String fn = getApplicationContext().getString(R.string.kuji_file);		//kuji.db
 				dbMsg = "fn= " + fn ;
 				kuji_table = getResources().getString(R.string.kuji_table);				//kuji_table</string>
 				dbMsg = dbMsg +  ",テーブル名=" + kuji_table;
@@ -324,7 +329,10 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 //コンテキストメニュー//////////////////////////////////////////////////////メニューボタンで表示するメニュー//
 	///ContextMenu///http://techbooster.jpn.org/andriod/ui/7490///
 		public String contextTitile = null;
-		static final int CONTEXT_web_rec = MENU_END+10;					//現在のwebページを記録
+		static final int CONTEXT_kujiSyurui = MENU_END+10;					//現在のwebページを記録
+		static final int CONTEXT_kurikaesi = CONTEXT_kujiSyurui+1;					//現在のwebページを記録
+		static final int CONTEXT_hyoujisuu = CONTEXT_kurikaesi+1;					//現在のwebページを記録
+		static final int CONTEXT_web_rec = CONTEXT_hyoujisuu+1;					//現在のwebページを記録
 		static final int CONTEXT_web_ken = CONTEXT_web_rec+1;			//このくじに関する検索
 		static final int CONTEXT_web_Sre = CONTEXT_web_ken+1;			//webのスケールリセット
 		static final int CONTEXT_kuji_set = CONTEXT_web_Sre+1;			//このくじの設定変更
@@ -332,7 +340,7 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 		ArrayList<String> otherList;		//その他のくじ
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		final String TAG = "onCreateContextMenu[AtarekunnActivity]";
 		String dbMsg="開始";/////////////////////////////////////
@@ -341,6 +349,9 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 			dbMsg=contextTitile+";";/////////////////////////////////////
 			menu.setHeaderTitle(contextTitile);		//リスト操作;コンテキストメニューの設定
 			//Menu.add(int groupId, int itemId, int order, CharSequence title)
+			menu.add(0, CONTEXT_kujiSyurui, 0, getResources().getString(R.string.kujiSyuruiTitol));
+			menu.add(0, CONTEXT_kurikaesi, 0, getResources().getString(R.string.kurikaesi_val_titol));
+			menu.add(0, CONTEXT_hyoujisuu, 0, getResources().getString(R.string.main_tf_hyoujisuu));
 			menu.add(0, CONTEXT_web_rec, 0, getResources().getString(R.string.menu_item_sousa_webrecord));		//現在のwebページを記録
 			String sarchUrl = webView.getUrl();	                                        	//String sarchUrl = webFtagnemt.getUrl();
 			dbMsg= dbMsg + "は" + shyougouURL + " [" + sarchUrl.equals(shyougouURL) + "]と "
@@ -367,6 +378,12 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 		try{
 			dbMsg="item" + item.getItemId() + ")";/////////////////////////////////////
 			switch (item.getItemId()) {
+			case CONTEXT_kujiSyurui:					//現在のwebページを記録
+				return true;
+			case CONTEXT_kurikaesi:					//現在のwebページを記録
+				return true;
+			case CONTEXT_hyoujisuu:					//現在のwebページを記録
+				return true;
 			case CONTEXT_web_rec:					//現在のwebページを記録
 				webRecord();							//表示されているwebページの設定保存
 				return true;
@@ -392,8 +409,192 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 		}
 		return true;
 	}
+///NaviView///DrawerLayoutTest-HEAD http://jp.androids.help/q3268//////////コンテキストメニュー//
 
-///くじ種と繰り返し選択//////////////////////////////////////////////////////コンテキストメニュー//
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		final String TAG = "onCreateOptionsMenu[AtarekunnActivity]";
+//		String dbMsg = "groupPosition=" ;
+//		try {
+//			Log.i (TAG, dbMsg);
+//		} catch (Exception e) {
+//			Log.e (TAG, dbMsg + "で" + e);
+//		}
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.drawer_menu, menu);
+//		return true;
+//	}
+
+	private void initDrawer() {
+		final String TAG = "onCreateOptionsMenu[AtarekunnActivity]";
+		String dbMsg = "groupPosition=" ;
+		try {
+			drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+			drawerList = (ExpandableListView) findViewById(R.id.left_drawer);
+			drawerList.setAdapter(new NewAdapter(this, groupItem, childItem));
+			drawerList.setOnChildClickListener(new ExpandableListView.OnChildClickListener () {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View view,int groupPosition, int childPosition, long id) {
+					final String TAG = "onCreateOptionsMenu[AtarekunnActivity]";
+					String dbMsg = "groupPosition=" ;
+					try {
+						Log.i (TAG, dbMsg);
+					} catch (Exception e) {
+						Log.e (TAG, dbMsg + "で" + e);
+					}
+					return false;
+				}
+			});
+			Log.i (TAG, dbMsg);
+		} catch (Exception e) {
+			Log.e (TAG, dbMsg + "で" + e);
+		}
+
+
+		// actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_menu,
+		// R.drawable.ic_drawer, R.string.open_drawer,
+		// R.string.close_drawer) {
+		// public void onDrawerClosed(View view) {
+		// getActionBar().setSubtitle("open");
+		// }
+		//
+		// /** Called when a drawer_menu has settled in a completely open state. */
+		// public void onDrawerOpened(View drawerView) {
+		// getActionBar().setSubtitle("close");
+		// }
+		//
+		// };
+		//
+		// drawer_menu.setDrawerListener(actionBarDrawerToggle);
+
+	}
+
+	public void setGroupData() {
+		final String TAG = "setGroupData[AtarekunnActivity]";
+		String dbMsg = "" ;
+		try {
+			groupItem.add(getResources().getString(R.string.kujiSyuruiTitol));
+			groupItem.add(getResources().getString(R.string.kurikaesi_val_titol));
+			groupItem.add(getResources().getString(R.string.main_tf_hyoujisuu));
+			groupItem.add(getResources().getString(R.string.menu_item_sousa));
+			groupItem.add(getResources().getString(R.string.menu_item_sonota));
+			Log.i (TAG, dbMsg);
+		} catch (Exception e) {
+			Log.e (TAG, dbMsg + "で" + e);
+		}
+	}
+
+	ArrayList<String> groupItem = new ArrayList<String>();
+	ArrayList<Object> childItem = new ArrayList<Object>();
+
+	public void setChildGroupData() {
+		final String TAG = "setChildGroupData[AtarekunnActivity]";
+		String dbMsg = "groupPosition=" ;
+		try {
+			Locale kuni = Locale.getDefault ();
+			dbMsg = "キー=" + kuni  ;//////////////////
+			TelephonyManager telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+			String pCountry = telManager.getSimCountryIso();			 // 取得
+			dbMsg = dbMsg + "電キー=" + pCountry;				ArrayList<String> child = new ArrayList<String>();
+			if( pCountry.equals("jp") ){
+				child.add(getResources().getString(R.string.loto7_name));	// アイテムを追加します
+				child.add(getResources().getString(R.string.loto6_name));
+				child.add(getResources().getString(R.string.mini_loto_name));
+				child.add(getResources().getString(R.string.num4_name));
+				child.add(getResources().getString(R.string.num3_name));
+			}else if( pCountry.equals("us")){
+				child.add(getResources().getString(R.string.power_ball_name));
+				child.add(getResources().getString(R.string.mega_millions));
+			} else if(pCountry.equals("hk")			//香港
+					|| pCountry.equals("cn")				//中国
+					|| pCountry.equals("tw")				//台湾
+				//					|| Locale.TRADITIONAL_CHINESE.equals(kuni)
+				//					|| Locale.SIMPLIFIED_CHINESE.equals(kuni)
+					) {				// HK 	Hong Kong 	>>>cc 	China (中華人民共和国)
+				child.add(getResources().getString(R.string.mar_six_name));
+			} else  if(pCountry.equals("fr")
+					|| pCountry.equals("uk")
+					|| pCountry.equals("es")		//スペイン Spanish (es_ES)
+					|| pCountry.equals("ie")		//アイルランド
+					|| pCountry.equals("pt")		//ポルトガル
+					|| pCountry.equals("lu")		//ルクセンブルク
+					|| pCountry.equals("ch")		//スイス
+					|| pCountry.equals("be")		//ベルギー Dutch, Belgium (nl_BE)
+					|| pCountry.equals("at")		//オーストリアGerman, Austria (de_AT)
+					) {
+				child.add(getResources().getString(R.string.ruro_mllions_name));
+			} else{
+				if(Locale.JAPAN.equals(kuni)) {				// ja_JP
+					child.add(getResources().getString(R.string.loto7_name));	// アイテムを追加します
+					child.add(getResources().getString(R.string.loto6_name));
+					child.add(getResources().getString(R.string.mini_loto_name));
+					child.add(getResources().getString(R.string.num4_name));
+					child.add(getResources().getString(R.string.num3_name));
+				} else if(Locale.US.equals(kuni)) {				//アメリカ
+					child.add(getResources().getString(R.string.power_ball_name));
+					child.add(getResources().getString(R.string.mega_millions));
+				} else if(Locale.CHINA.equals(kuni)
+						|| Locale.TAIWAN.equals(kuni)
+						|| Locale.CHINESE.equals(kuni)
+						|| Locale.TRADITIONAL_CHINESE.equals(kuni)
+						|| Locale.SIMPLIFIED_CHINESE.equals(kuni)
+					//						|| kokumei.equals("hk")
+						) {				// HK 	Hong Kong 	香港>>>cc 	China (中華人民共和国)
+					child.add(getResources().getString(R.string.mar_six_name));
+				} else 	if(Locale.FRANCE.equals(kuni)				//フランス
+						|| Locale.UK.equals(kuni)					//イギリス
+						|| Locale.ENGLISH.equals(kuni)
+					//						|| kokumei.equals("sp")					//スペイン Spanish (es_ES)
+					//						|| kokumei.equals("nik")					//北アイルラン	//アイルランドEnglish, Ireland (en_IE)
+					//						|| kokumei.equals("ie")						//・アイルランド
+					//						|| kokumei.equals("po")					//ポルトガル
+					//						|| kokumei.equals("sz")	//スイス
+					//						|| kokumei.equals("be")					//ベルギー Dutch, Belgium (nl_BE)
+					//						|| kokumei.equals("au")					//オーストリアGerman, Austria (de_AT)
+						) {		//ルクセンブルグ,ポルトガル？
+					child.add(getResources().getString(R.string.ruro_mllions_name));
+				}
+			}
+			childItem.add(child);
+			child = new ArrayList<String>();
+			child.add(getResources().getString(R.string.menu_item_sousa_ippatu));			//一発表示
+			child.add(getResources().getString(R.string.menu_item_sousa_ruisek));			//>乱数累積
+			childItem.add(child);
+			child = new ArrayList<String>();
+			for(int i= 6; i < 17 ;i++){
+				child.add(String.valueOf (i));			//一発表示
+			}
+			childItem.add(child);
+			child = new ArrayList<String>();
+			child.add(getResources().getString(R.string.menu_item_sousa_webrecord));            //  現在のwebページを記録
+			child.add(getResources().getString(R.string.menu_item_sousa_kekkaCheck));            //結果発表webへ
+			childItem.add(child);
+			child = new ArrayList<String>();
+			child.add(getResources().getString(R.string.menu_item_sonota_settei));          //設定
+			child.add(getResources().getString(R.string.menu_item_sonota_help));            //ヘルプ表示
+			child.add(getResources().getString(R.string.menu_item_sonota_settei_syoukyo));  //設定消去</string>
+			child.add(getResources().getString(R.string.menu_item_sonota_end));            //e="">終了	</string>
+			childItem.add(child);
+			Log.i (TAG, dbMsg);
+		} catch (Exception e) {
+			Log.e (TAG, dbMsg + "で" + e);
+		}
+	}
+
+//	@Override
+	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+		final String TAG = "onChildClick[AtarekunnActivity]";
+		String dbMsg = "groupPosition=" ;
+		try {
+			Toast.makeText(this, "Clicked On Child" + v.getTag(),
+					Toast.LENGTH_SHORT).show();
+			Log.i (TAG, dbMsg);
+		} catch (Exception e) {
+			Log.e (TAG, dbMsg + "で" + e);
+		}
+		return true;
+	}
+///くじ種と繰り返し選択//////////////////////////////////////////////////////NaviView//
 	public void kujiSentaku(String kujiSyurui) {			///くじ種選択 <onCreate、kujiRecTuika
 		final String TAG = "kujiSentaku[AtarekunnActivity]";
 		String dbMsg = "";//////////////////
@@ -664,119 +865,204 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 
 ///////////////////////////////////////////////////////くじ種選択
 
+
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate (Bundle savedInstanceState) {
+		super.onCreate (savedInstanceState);
 		final String TAG = "onCreate[AtarekunnActivity]";
 		String dbMsg = "";//////////////////
-		try{
-			ruisekiMax = 0;				//出現回数最大値
-			maxVal = 0;					//本数字の最大値
-			subMaxVal = 0;				//別枠の最大値
-			repSyurui=getResources().getString(R.string.menu_item_sousa_ruisek);		//乱数累積;	一発繰り返し区分
-			locale = Locale.getDefault();	// アプリで使用されているロケール情報を取得
-			rContext =this;
-			res = getResources();
-	//		sharedPref = getSharedPreferences(getResources().getString(R.string.pref_f_name),MODE_PRIVATE);		//	getSharedPreferences(prefFname,MODE_PRIVATE);
-			sharedPref = PreferenceManager.getDefaultSharedPreferences(this);					//this.getSharedPreferences(this, MODE_PRIVATE);		//
-			myEditor = sharedPref.edit();
-			readPrif();					//プリファレンスの読込み
-			tourkuKuji = new ArrayList<String>();		//既存のくじ
-			tourkuKuji.add(getResources().getString(R.string.power_ball_name));
-			tourkuKuji.add(getResources().getString(R.string.mega_millions));
-			tourkuKuji.add(getResources().getString(R.string.ruro_mllions_name));
-			tourkuKuji.add(getResources().getString(R.string.mar_six_name));
-			tourkuKuji.add(getResources().getString(R.string.loto7_name));
-			tourkuKuji.add(getResources().getString(R.string.loto6_name));
-			tourkuKuji.add(getResources().getString(R.string.mini_loto_name));
-			tourkuKuji.add(getResources().getString(R.string.num4_name));
-			tourkuKuji.add(getResources().getString(R.string.num3_name));
+		try {
+			ruisekiMax = 0;                //出現回数最大値
+			maxVal = 0;                    //本数字の最大値
+			subMaxVal = 0;                //別枠の最大値
+			repSyurui = getResources ().getString (R.string.menu_item_sousa_ruisek);        //乱数累積;	一発繰り返し区分
+			locale = Locale.getDefault ();    // アプリで使用されているロケール情報を取得
+			rContext = this;
+			res = getResources ();
+			//		sharedPref = getSharedPreferences(getResources().getString(R.string.pref_f_name),MODE_PRIVATE);		//	getSharedPreferences(prefFname,MODE_PRIVATE);
+			sharedPref = PreferenceManager.getDefaultSharedPreferences (this);                    //this.getSharedPreferences(this, MODE_PRIVATE);		//
+			myEditor = sharedPref.edit ();
+			readPrif ();                    //プリファレンスの読込み
 
-			dbMsg = "前回=" + kujiSyurui;//////////////////
-			setContentView(R.layout.main);
-			kahenHyoujiLL = (LinearLayout)findViewById(R.id.kahen_hyouji);	//表示個数設定部のリニアレイアウト
-			IppatuMainTF = (TextView)findViewById(R.id.f1mainTF);	//一発表示のメイン
-	//		registerForContextMenu(IppatuMainTF);			//Viewに追加する場合、registerForContextMenu(View);が必要
-			IppatuSubTF = (TextView)findViewById(R.id.f1SubTF);	//一発表示のサブ
-	//		slotBT = (Button) this.findViewById(R.id.ippatuBtn);		//一発表示
-	//		IppatuMainTF.setId(slotBT_ID);
-			ruisekiLL = (LinearLayout)findViewById(R.id.ruisekiLL);	//累積設定部のリニアレイアウト
+			tourkuKuji = new ArrayList<String> ();        //既存のくじ
+			tourkuKuji.add (getResources ().getString (R.string.power_ball_name));
+			tourkuKuji.add (getResources ().getString (R.string.mega_millions));
+			tourkuKuji.add (getResources ().getString (R.string.ruro_mllions_name));
+			tourkuKuji.add (getResources ().getString (R.string.mar_six_name));
+			tourkuKuji.add (getResources ().getString (R.string.loto7_name));
+			tourkuKuji.add (getResources ().getString (R.string.loto6_name));
+			tourkuKuji.add (getResources ().getString (R.string.mini_loto_name));
+			tourkuKuji.add (getResources ().getString (R.string.num4_name));
+			tourkuKuji.add (getResources ().getString (R.string.num3_name));
 
-			if(subMaxVal == 0){			//別枠の最大値が設定されていなければ
-				IppatuSubTF.setVisibility(View.GONE);		//6桁目の表示枠
-	//			RuisekiSubTF.setVisibility(View.GONE);		//累積6桁目の表示枠
+			dbMsg = "前回=" + kujiSyurui;///////////////
+			//This Activity already has an action bar supplied by the window decor. Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.
+			setContentView (R.layout.main);
+			Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+			setSupportActionBar (toolbar);
+
+	//		if( 20 < Integer.valueOf (Build.VERSION.SDK )){
+				//			FloatingActionButton fab = (FloatingActionButton) findViewById (R.id.fab);
+				//			fab.setOnClickListener (new View.OnClickListener () {
+				//				@Override
+				//				public void onClick (View view) {
+				//					Snackbar.make (view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction ("Action", null).show ();
+				//				}
+				//			});
+				drawer = (DrawerLayout) findViewById (R.id.drawer_layout);
+				ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+				drawer.setDrawerListener (toggle);
+				toggle.syncState ();
+				//https://tech.recruit-mp.co.jp/design/post-5165/
+				NavigationView navigationView = (NavigationView) findViewById (R.id.nav_view);
+				dbMsg = "NavigationView=" + navigationView;   ///////Expand/collapse ?
+////////////////////////////////////////////////
+				setGroupData();
+				setChildGroupData();
+
+				initDrawer();
+////////////////////////////////////////////////
+				Log.i (TAG, dbMsg);
+//				navigationView.setNavigationItemSelectedListener (new NavigationView.OnNavigationItemSelectedListener () {
+//					@Override
+//					public boolean onNavigationItemSelected (MenuItem menuItem) {
+//						final String TAG = "onNavigationItemSelected[AtarekunnActivity]";
+//						String dbMsg = "";//////////////////
+//						try {
+//							int itemId = menuItem.getItemId ();
+//							dbMsg = "itemId=" + itemId;
+//							switch (menuItem.getItemId ()) {
+//								case R.id.kujiSyuruiTitol:
+//									dbMsg = dbMsg + ";" + getApplicationContext ().getString (R.string.kujiSyuruiTitol);
+//									break;
+//								case R.id.kurikaesi_val_titol:
+//									dbMsg = dbMsg + ";" + getApplicationContext ().getString (R.string.kurikaesi_val_titol);
+//									break;
+//								case R.id.main_tf_hyoujisuu:
+//									dbMsg = dbMsg + ";" + getApplicationContext ().getString (R.string.main_tf_hyoujisuu);
+//									break;
+//								case R.id.menu_sousa:
+//									dbMsg = dbMsg + ";" + getApplicationContext ().getString (R.string.menu_item_sousa);
+//									break;
+//								case R.id.menu_sonota:
+//									dbMsg = dbMsg + ";" + getApplicationContext ().getString (R.string.menu_item_sonota);
+//									break;
+//								default:
+//									break;
+//							}
+//							//					if (itemId == R.id.kujiSyuruiTitol || itemId == R.id.kurikaesi_val_titol) {
+//							//						// Navigation Itemを選択状態にしたい場合はsetCheckedをtrueにする
+//							//						menuItem.setChecked(true);
+//							AtarekunnActivity.this.drawer.closeDrawers ();
+//							//						return true;
+//							//					}
+//							Log.i (TAG, dbMsg);
+//						} catch (Exception e) {
+//							Log.e (TAG, dbMsg + "で" + e);
+//						}
+//						return true;
+//					}
+//				});
+				/*
+				* E/dalvikvm: Could not find class 'android.widget.ThemedSpinnerAdapter', referenced from method android.support.v7.widget.AppCompatSpinner$DropDownAdapter.<init>
+				* */
+
+		//	}
+
+			kahenHyoujiLL = (LinearLayout) findViewById (R.id.kahen_hyouji);    //表示個数設定部のリニアレイアウト
+			IppatuMainTF = (TextView) findViewById (R.id.f1mainTF);    //一発表示のメイン
+			//		registerForContextMenu(IppatuMainTF);			//Viewに追加する場合、registerForContextMenu(View);が必要
+			IppatuSubTF = (TextView) findViewById (R.id.f1SubTF);    //一発表示のサブ
+			//		slotBT = (Button) this.findViewById(R.id.ippatuBtn);		//一発表示
+			//		IppatuMainTF.setId(slotBT_ID);
+			ruisekiLL = (LinearLayout) findViewById (R.id.ruisekiLL);    //累積設定部のリニアレイアウト
+
+			if (subMaxVal == 0) {            //別枠の最大値が設定されていなければ
+				IppatuSubTF.setVisibility (View.GONE);        //6桁目の表示枠
+				//			RuisekiSubTF.setVisibility(View.GONE);		//累積6桁目の表示枠
 				/*0:view.VISIBLE・・・表示
 				 *1; view.INVISIBLE・・・非表示（非表示にしたスペースは詰めない）
 				 *8; view.GONE・・・非表示（非表示にしたスペースを詰める）
 				 */
 			}
 
-			ruisekiSuuTF = (TextView)findViewById(R.id.ruisekiSuuTF);			//出現回数上限の表示枠
-			aCount = (TextView)findViewById(R.id.aCount);						//現在のカウント
-			aCount.setText(String.valueOf(0));
-			tCount = (TextView)findViewById(R.id.tCount);						//最終カウント
-			lank_sv = (ScrollView)findViewById(R.id.lank_sv);					//出現状況表示のスクロールビュー
-			lank1data = (TextView)findViewById(R.id.lank1data);					//出現状況表示
-	//		lank1data.setId(lank1data_ID);
-			maxValSP = (Spinner)findViewById(R.id.maxValSP);	//六合彩用の可変個数スピナー
-			setMaxSP(6 , 15);		//maxValSPのアイテム設定
-			maxValSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		//		@Override
-				public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+			ruisekiSuuTF = (TextView) findViewById (R.id.ruisekiSuuTF);            //出現回数上限の表示枠
+			aCount = (TextView) findViewById (R.id.aCount);                        //現在のカウント
+			aCount.setText (String.valueOf (0));
+			tCount = (TextView) findViewById (R.id.tCount);                        //最終カウント
+			lank_sv = (ScrollView) findViewById (R.id.lank_sv);                    //出現状況表示のスクロールビュー
+			lank1data = (TextView) findViewById (R.id.lank1data);                    //出現状況表示
+			//		lank1data.setId(lank1data_ID);
+			maxValSP = (Spinner) findViewById (R.id.maxValSP);    //六合彩用の可変個数スピナー
+			setMaxSP (6, 15);        //maxValSPのアイテム設定
+			maxValSP.setOnItemSelectedListener (new AdapterView.OnItemSelectedListener () {
+				//		@Override
+				public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 					Spinner spinner = (Spinner) parent;
-					String item = (String) spinner.getSelectedItem();	// 選択されたアイテムを取得します
-					val_val=Integer.valueOf(item);				//乱数の個数
+					String item = (String) spinner.getSelectedItem ();    // 選択されたアイテムを取得します
+					val_val = Integer.valueOf (item);                //乱数の個数
 				}
-		//		@Override
-				public void onNothingSelected(AdapterView<?> arg0) {
+
+				//		@Override
+				public void onNothingSelected (AdapterView<?> arg0) {
 
 				}
 			});
 
-            kujisyuSP = (Spinner)findViewById(R.id.kujisyuSP);	//くじの種類スピナー
-			kujiSentaku( kujiSyurui );										///くじ種選択
-	//		kujisyuSP.setOnKeyListener(this);
-			repetSp = (Spinner)findViewById(R.id.repetSp);	//繰り返し選択スピナー
-			repetSentaku();												///繰り返し選択
+			kujisyuSP = (Spinner)  findViewById (R.id.kujisyuSP);    //くじの種類スピナー
+			kujiSentaku (kujiSyurui);                                        ///くじ種選択
+			//		kujisyuSP.setOnKeyListener(this);
+			repetSp = (Spinner)  findViewById (R.id.repetSp);    //繰り返し選択スピナー
+			repetSentaku ();                                                ///繰り返し選択
 			riuseki = false;
-			dbMsg= dbMsg + ",累積表示=" + riuseki;/////////////////////////////////////
-			if( ! riuseki ){			//累積表示しない
-				dbMsg= dbMsg + ",ruisekiLL=" + ruisekiLL;/////////////////////////////////////
-				ruisekiLL.setVisibility(View.GONE);
-				dbMsg= dbMsg + ",lank_sv=" + lank_sv;/////////////////////////////////////
-				lank_sv.setVisibility(View.GONE);						//出現状況表示のスクロールビュー
+			dbMsg = dbMsg + ",累積表示=" + riuseki;/////////////////////////////////////
+			if (!riuseki) {            //累積表示しない
+				dbMsg = dbMsg + ",ruisekiLL=" + ruisekiLL;/////////////////////////////////////
+				ruisekiLL.setVisibility (View.GONE);
+				dbMsg = dbMsg + ",lank_sv=" + lank_sv;/////////////////////////////////////
+				lank_sv.setVisibility (View.GONE);                        //出現状況表示のスクロールビュー
 			}
-//			frag_aria = (FrameLayout)findViewById(R.id.frag_aria);	//Fragmentを読み込むFrameLayout
-//			FragmentManager fragmentManager = getFragmentManager();
-//			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			webView = (WebView)findViewById(R.id.webView);    //		webFtagnemt = new WebFtagnemt();
-			WebSettings settings = webView.getSettings();
-			settings.setSupportMultipleWindows(true);
-			settings.setLoadsImagesAutomatically(true);
-			settings.setBuiltInZoomControls(true);						//ズームコントロールを表示し
-			settings.setSupportZoom(true);								//ピンチ操作を有効化
-			settings.setLightTouchEnabled(true);
-			settings.setJavaScriptEnabled(true);						//JavaScriptを有効化
-			settings.setUseWideViewPort(true);							//読み込んだコンテンツの幅に表示倍率を自動調整
-			settings.setLoadWithOverviewMode(true);						//☆setUseWideViewPortに続けて記載必要
-			dbMsg = dbMsg +",照合URL="+shyougouURL ;////////////////////////////////////////////////////////////////////////////
-//          webFtagnemt.init(shyougouURL);								//準備したFtagnemtをFrameLayoutに流し込む
-//			fragmentTransaction.replace(frag_aria.getId() , webFtagnemt); 	//	☆.replace(android.R.id.content, では全画面が切り替わる
-//			fragmentTransaction.commit();
-//			registerForContextMenu(frag_aria);			//Viewに追加する場合、registerForContextMenu(View);が必要
-////		checkServiceAvailable();			// Google Play Services APK がインストールされているかチェックするhttp://dev.classmethod.jp/smartphone/android/android-google-play-services-2/
-////			nend_aria = (LinearLayout) findViewById(R.id.nend_aria);				//nendの読み込み範囲
-////			nenvNow = false;
-////			nend_aria.setVisibility(View.GONE);
-			nendAdView = (NendAdView) findViewById(R.id.nend);								//nend広告表示エリアを
-			nendAdView.setVisibility(View.GONE);											//非表示
-			mAdView = (AdView) findViewById(R.id.adView);									//Google広告表示エリアを
- 			mAdView.setVisibility(View.GONE);												//非表示
-	//		Log.i(TAG,dbMsg);
+			//			frag_aria = (FrameLayout)findViewById(R.id.frag_aria);	//Fragmentを読み込むFrameLayout
+			//			FragmentManager fragmentManager = getFragmentManager();
+			//			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			webView = (WebView) findViewById (R.id.webView);    //		webFtagnemt = new WebFtagnemt();
+			WebSettings settings = webView.getSettings ();
+			settings.setSupportMultipleWindows (true);
+			settings.setLoadsImagesAutomatically (true);
+			settings.setBuiltInZoomControls (true);                        //ズームコントロールを表示し
+			settings.setSupportZoom (true);                                //ピンチ操作を有効化
+			settings.setLightTouchEnabled (true);
+			settings.setJavaScriptEnabled (true);                        //JavaScriptを有効化
+			settings.setUseWideViewPort (true);                            //読み込んだコンテンツの幅に表示倍率を自動調整
+			settings.setLoadWithOverviewMode (true);                        //☆setUseWideViewPortに続けて記載必要
+			dbMsg = dbMsg + ",照合URL=" + shyougouURL;////////////////////////////////////////////////////////////////////////////
+			//          webFtagnemt.init(shyougouURL);								//準備したFtagnemtをFrameLayoutに流し込む
+			//			fragmentTransaction.replace(frag_aria.getId() , webFtagnemt); 	//	☆.replace(android.R.id.content, では全画面が切り替わる
+			//			fragmentTransaction.commit();
+			//			registerForContextMenu(frag_aria);			//Viewに追加する場合、registerForContextMenu(View);が必要
+			////		checkServiceAvailable();			// Google Play Services APK がインストールされているかチェックするhttp://dev.classmethod.jp/smartphone/android/android-google-play-services-2/
+			////			nend_aria = (LinearLayout) findViewById(R.id.nend_aria);				//nendの読み込み範囲
+			////			nenvNow = false;
+			////			nend_aria.setVisibility(View.GONE);
+			nendAdView = (NendAdView) findViewById (R.id.nend);                                //nend広告表示エリアを
+			nendAdView.setVisibility (View.GONE);                                            //非表示
+			mAdView = (AdView) findViewById (R.id.adView);                                    //Google広告表示エリアを
+			mAdView.setVisibility (View.GONE);                                                //非表示
+			Log.i (TAG, dbMsg);
 		} catch (Exception e) {
-			Log.e(TAG, dbMsg + "で"+e);
+			Log.e (TAG, dbMsg + "で" + e);
 		}
+		// ATTENTION: This was auto-generated to implement the App Indexing API.
+		// See https://g.co/AppIndexing/AndroidStudio for more information.
+		//		client2 = new GoogleApiClient.Builder (this).addApi (AppIndex.API).build ();
 	}
+
+	//	public CustomView(Context context) {	//コンストラクタ内で何か処理を入れている場合isInEditMode()で判定してやらないと上記ログが表示される
+	//		super(context);
+	//		if (!isInEditMode()) {		// レイアウトエディターでisInEditMode()で判定しないとエディター内でExceptionが発生する
+	//			init();			// カスタムユーザーエージェントをセットする
+	//		}
+	//	}
 
 //	public CustomView(Context context) {	//コンストラクタ内で何か処理を入れている場合isInEditMode()で判定してやらないと上記ログが表示される
 //		super(context);
@@ -808,7 +1094,7 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 				}
 				currentFo = AtarekunnActivity.this.getCurrentFocus();
 				dbMsg= dbMsg + ",currentFo=" + currentFo;/////////////////////////////////////
-	//			Log.i(TAG,dbMsg);
+				Log.i(TAG,dbMsg);
 			}catch (Exception e) {
 				Log.e(TAG,dbMsg + "で"+e.toString());
 			}
@@ -2699,7 +2985,7 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 	public SQLiteDatabase kuji_db;						//計算履歴ファイル
 	public String kuji_table;											//計算履歴テーブル名
 	public KujiHelper kujiHelper = null;				//計算履歴トヘルパー
-	public  SQLiteStatement stmt = null ;			//6；SQLiteStatement
+	public SQLiteStatement stmt = null ;			//6；SQLiteStatement
 	public List<Map<String, Object>> kujiList;			//DB登録されているくじ名
 	public ArrayList<String> tourkuKuji = null;		//既存のくじ
 
@@ -3429,6 +3715,32 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 //		}
 //		return false;
 //	}
+//FloatingActionButton fab = (FloatingActionButton) findViewById (R.id.fab);
+//	fab.setOnClickListener (new View.OnClickListener () {
+//		@Override
+//		public void onClick (View view) {
+//			Snackbar.make (view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction ("Action", null).show ();
+//		}
+//	});
+//
+//	DrawerLayout drawer_menu = (DrawerLayout) findViewById (R.id.drawer_layout);
+//	ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (this, drawer_menu, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//	drawer_menu.setDrawerListener (toggle);
+//	toggle.syncState ();
+//
+//	NavigationView navigationView = (NavigationView) findViewById (R.id.nav_view);
+//	navigationView.setNavigationItemSelectedListener (this);
+//}
+
+	@Override
+	public void onBackPressed () {
+		DrawerLayout drawer = (DrawerLayout) findViewById (R.id.drawer_layout);
+		if (drawer.isDrawerOpen (GravityCompat.START)) {
+			drawer.closeDrawer (GravityCompat.START);
+		} else {
+			super.onBackPressed ();
+		}
+	}
 
 	public View selBtn;
 	public int renzoku;
@@ -3776,6 +4088,10 @@ public class AtarekunnActivity extends Activity  implements plogTaskCallback{			
 //https://developers.google.com/mobile-ads-sdk/docs/?hl=ja
 //https://developers.google.com/admob/android/eclipse?hl=ja#download_the_google_play_services_sdk
 //http://kino2718.blogspot.jp/2014/03/androidadmob-sdkgoogle-play-sdk.html
+
+//
+//http://techblog.yahoo.co.jp/android/androidcoordinatorlayout/
+
 /*Error:(31, 1) Could not compile build file 'I:\an\workspace\atarekunn\app\build.gradle'.
 > startup failed:
   build file 'I:\an\workspace\atarekunn\app\build.gradle': 31: expecting '}', found '' @ line 31, column 2.

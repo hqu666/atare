@@ -54,6 +54,7 @@ test
 	<string name="ruisekiProgMsg1">いづれかの数字が</string>
 	<string name="ruisekiProgMsg2">回出るまで繰り返し</string>
 			<string name="menu_item_sousa">操作</string>
+	<string name="menu_item_sousa_webrecord">現在のwebページを記録</string>
 	<string name="menu_item_sousa_kekkaCheck">結果発表webへ</string>
 	<string name="menu_item_sousa_ippatu">一発表示</string>
 	<string name="menu_item_sousa_ruisek">乱数累積</string>
@@ -71,7 +72,6 @@ test
 	<string name="kaicyuu">回中</string><!-- -->
 	<string name="syoyoujikan">所要時間　</string><!-- -->
 	<string name="comon_ruiseki">累積</string><!-- -->
-	<string name="menu_item_sousa_webrecord">現在のwebページを記録</string>
 	<string name="wrd_titol">タイトル</string>
 	<string name="wrd_msg">で表示されるwebページを現在表示しているページに設定します。</string>
 	<string name="wrd_url">URL</string>

@@ -1,26 +1,21 @@
 package com.hijiyama_koubou.atare_kun;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Map;
-
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceActivity;
-import android.text.InputType;
-import android.util.Log;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import java.util.Locale;
+import java.util.Map;
 
 public class MyPreferences extends PreferenceActivity {
 	AtarekunnActivity AAA = new AtarekunnActivity();  //オブジェクトNakedFileVeiwActivityの生成
@@ -28,7 +23,8 @@ public class MyPreferences extends PreferenceActivity {
 	public SharedPreferences sharedPref;// = AAA.sharedPref;
 	public Editor myEditor;//=AAA.myEditor;
 	public boolean dPadAri=false;			//ダイヤルキーは使えない
-	public String pref_apiLv;		//APIL
+	public String pref_apiLv  = "14";							//APIレベル
+	public int pref_sonota_vercord =0;				//このアプリのバージョンコード
 	public int kurikaesi_val;				//繰り返し
 //	public String kujiSyurui;		//);	//現在のくじ種類
 	public boolean prefUseDlog;			//ダイヤログの利用
@@ -77,6 +73,7 @@ public class MyPreferences extends PreferenceActivity {
 			dbMsg =dbMsg+  "、ダイアログの使用="+String.valueOf(prefUseDlog);//////////////////
 			dPadAri = extras.getBoolean("dPadAri");			//ダイヤログの利用
 			dbMsg =dbMsg+  ",ダイヤルキー="+ dPadAri;//////////////////
+			pref_apiLv=String.valueOf(Build.VERSION.SDK);
 ////java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String
 // Converting to string: TypedValue{t=0x10/d=0x64 a=-1}
 //android.content.res.Resources$NotFoundException: String resource ID #0x55
