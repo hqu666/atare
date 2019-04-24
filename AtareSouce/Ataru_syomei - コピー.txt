@@ -1,0 +1,33 @@
+C:\Users\papa>H:\an\jre1.6\bin\keytool -genkey -v -keystore com.hijiyama_koubou.atarekun -alias H:\an\workspace\atarekunn -keyalg RSA -validity 10000
+
+キーストアのパスワードを入力してください:	ku6666ku
+新規パスワードを再入力してください:
+一致しません。もう一度実行してください
+キーストアのパスワードを入力してください:
+新規パスワードを再入力してください:
+姓名を入力してください。
+  [Unknown]:  Hiroomi Kuwayama
+組織単位名を入力してください。
+  [Unknown]:  Hijiyama Koubou
+組織名を入力してください。
+  [Unknown]:  hijiyama_koubou
+都市名または地域名を入力してください。
+  [Unknown]:  Hiroshima
+州名または地方名を入力してください。
+  [Unknown]:  cyuugoku
+この単位に該当する 2 文字の国番号を入力してください。
+  [Unknown]:  jp
+CN=hiroomi kuwayama, OU=hijiyama_koubou, O=hijiyama_koubou, L=hiroshima, ST=cyuu
+goku, C=jp でよろしいですか?
+  [no]:  y
+
+10,000 日間有効な 1,024 ビットの RSA の鍵ペアと自己署名型証明書 (SHA1withRSA) を
+生成しています
+        ディレクトリ名: CN=hiroomi kuwayama, OU=hijiyama_koubou, O=hijiyama_koub
+ou, L=hiroshima, ST=cyuugoku, C=jp
+<H:\an\workspace\atarekunn> の鍵パスワードを入力してください。
+        (キーストアのパスワードと同じ場合は RETURN を押してください):
+新規パスワードを再入力してください:
+[com.hijiyama_koubou.atarekun を格納中]
+
+C:\Users\papa>

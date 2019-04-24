@@ -1,0 +1,76 @@
+random number generator "Atare_kun"
+
+"Atare_kun" cannot expect it. 
+"Atare_kun" is the number that appointed a random number of ranges that I appointed, 
+application to let you display it,When it does not occur to a number.
+
+"Atare_kun" have two function buttons.
+
+1)Swift attack indication
+  When you want to give a number quickly, please use this.
+Å@At the time of the, for example, consecutive purchase,
+
+2)Random number accumulation
+ I accumulate the outbreak number of times of the random number and am the number that appointed appearing numerical many things, a function to display.
+
+pre-seting
+1)Power Ball(USA)
+   Group1[range;1Å`59 * 5] &
+   Group2[range;1Å`39 * 1]
+2)Mega Millions(USA)
+   Group1[range;1Å`56 * 5] &
+   Group2[range;1Å`46 * 1]
+3)Euro Millions(European 9 countries)
+   Group1[range;1Å`50 * 5] &
+   Group2[range;1Å` 9 * 2]
+4)Mark six(Hong Kong)
+  [range;1Å`47 * 6]
+  But the system which I can register to 15 if I pay an additional charge
+5)Loto 7(Japan)
+  [range;1Å`37 * 7]
+6)Loto 6(Japan)
+  [range;1Å`43 * 6]
+7)Mini Loto(Japan)
+  [range;1Å`31 * 5]
+8)Numbers3(Japan)
+  [range;0Å` 9 * 3]
+9)Numbers4(Japan)
+  [range;0Å` 9 * 4]
+
+And "Atare_kun" can set it by a setting menu other than the pre-seted lottery as follows.
+ 1;Ranges from a minimum to a maximum.
+ 2;The number to produce.
+ 3;Two groups where vary in the setting mentioned above.
+ 4;The web page that identifies a lucky number
+
+/******** caution **********/
+The purchase from any place other than a country and the area selling a public lottery may become illegal.
+Therefore "Atare_kun" display warning when I choose overseas Loto lottery.
+The real purchase is responsibility of each person.
+
+I am investigating a small rule about the Japanese Loto lottery again.
+I want to finish it while writing an instruction manual.
+
+
+
+The first release
+Ver,1.1(2011/11/22)
+pre-seting
+1)Loto 6(Japan)
+2)Mini Loto(Japan)
+2)Numbers3(Japan)
+3)Numbers4(Japan)
+ and setting
+ 1;Ranges from a minimum to a maximum.
+ 2;The number to produce.
+Japanese Only
+
+From Ver,1.1(2013/3/23)
+*English correspondence
+*Add it to pre-seting it
+1)Power Ball(USA)
+2)Mega Millions(USA)
+3)Euro Millions(European 9 countries)
+4)Mark six(Hong Kong)
+5)Loto 7(Japan)
+

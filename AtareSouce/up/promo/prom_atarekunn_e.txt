@@ -1,0 +1,80 @@
+Random number generator
+"Atare Kun"
+
+The random number generator which supports an overseas number lottery
+
+
+
+"Atare kun" cannot do a thing having difficult "expectation".
+It is the number that appointed a random number of ranges that you appointed when it does not occur to a number, application to let you display it. 
+
+Good point
+1. I accumulate and display it
+    (soothing degree)…Not direction such as the animation to fan a feeling of) expectation, I display accumulation of the number of times that I set.
+
+2.Kind of a supporting lottery
+    Japan: Lot 7, lot 6, Miniloto, numbers game 3, numbers game 4
+    USA；Power Ball、Mega Millons
+    Denmark, Estonia, Finland, Germany, Iceland, Italy, Netherlands, Slovenia, Sweden：EuroMillions
+    Hong Kong;MARK SIX
+
+3. Setting called "or other"
+    I check the way of coming out of numbers in the rule that I hit on other than the supporting lottery and can watch it.
+
+4. It supports a terminal with dial key
+    Without being involved with a screen, I can perform all operation with a key (with one hand).
+    In addition, the normal Android application no longer moves even if I push the bottom of four arrow 
+keys if the bottom item is chosen, but I am the youngest, and, as for this application, it is for operation setting of the cell-phone same class before the smartphone if I come back to the top to the first top if I go to the bottom. (The set model that a model is special is excluded)
+
+
+How to use
+
+1. Kind of the lottery
+    I choose the kind of the lottery in a left upper spinner.
+    The change from a menu can choose the overseas lottery like Ver1.1, but I judge this spinner which country you are in from the line of a cell-phone using now then and display only the lottery which I can purchase.
+    （Careful, It is set the United States when I make an English mode in Japan,,Therefore that case changes the kind of the lottery by others of the menu, setting, and, please use it）
+
+2. Blow / accumulation reshuffling
+    Please choose it.
+    ①Do you display it by a blow?
+    ②Do you continue accumulating until you reach the quantity (as for 100 times of initial values) that a number of either set?
+    In a spinner of the top right corner
+    The dispatch is indication.
+    If a random number common in the soothing seems to be more reliable, it is random number accumulation.
+
+3.Indication button
+    A number to the set point of the lottery is displayed by the red indication frame in the top when I tap it.
+
+4.It is an indication area (under the indication button)
+  I set web page in Ver1.3.In addition, I put it in the setting of each lottery from the long tap of this area.
+※When do strange movement; a menu>>Others>>I remove the setting removal configuration file and go back up in a state just after the installation
+
+。
+
+
+
+Ver1.3.0 ;2015/10/26
+・Allocate favorite information for the information area.I register web page concerned in the beginning.
+・Simplification (I double as a button in an indication frame) of the interface
+・The setting of each lottery is changed confirmation / of by the long tap of the information area.
+・The common setting is gathered in the accumulation number of times and progress only by having indication or not, too.
+
+Ver1.2.2 ;2015/9/7;Color balance adjustment of the interface
+Ver1.2.0 ;2015/8/24 :Addition of the reshuffling interface
+Ver1.1.0;2013/3/22;It supports lot 7
+Ver1.0.0;2012/11/22:The first release
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
