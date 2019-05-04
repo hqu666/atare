@@ -1,66 +1,44 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '22.0.1'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.hijiyama_koubou.atare_kun"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionName "1.3.2"
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"      //JUnit4対応
-       multiDexEnabled true        //eferences in a .dex file cannot exceed 64K.”の対策
-        //Error:The number of method references in a .dex file cannot exceed 64K.
-       // Learn how to resolve this issue at https://developer.android.com/tools/building/multidex.html
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1034142
+        versionName "1.4.2"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable = true
         }
-        debug {
-            debuggable true
-        }
-//        jniDebug {
-//            initWith(buildTypes.debug)
-//            jniDebuggable true                              //Build type isn't JNI debuggable 対策
-//        }
     }
-    buildscript {
-        repositories {
-            jcenter()
-        }
-
-        dexOptions {
-            dexInProcess = true
-            javaMaxHeapSize "2g"        // GC overhead limit exceeded対策
-        }
-
-//        dependencies {
-////            androidTestCompile 'com.android.support.test:runner:0.4'      //JUnit4対応
-////            androidTestCompile 'com.android.support.test:rules:0.4'      //JUnit4対応
-//            //     classpath 'com.android.tools.build:gradle:2.1.0'
-//            //     classpath fileTree(dir: 'dirname', include: '*.jar')
-//        }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
-
-     productFlavors {
-    }
+    buildToolsVersion = '28.0.3'
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    //    compile 'net.nend.android:nend-sdk:+'    // nendSDK
-    compile 'com.android.support:multidex:1.0.0'
-    //eferences in a .dex file cannot exceed 64K.”の対策
-    //    compile 'com.firebase:firebase-client-android:2.3.1'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.google.android.gms:play-services:9.0.2'
-    //    compile 'com.beardedhen:androidbootstrap:2.2.0'
-    compile 'com.google.android.gms:play-services-ads:9.0.2'
-    //    compile 'com.squareup.dagger:dagger:1.2.1'
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha5'
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    //play-servicesは配布されていない
+    implementation 'com.android.support:support-media-compat:28.0.0'
+    //    appcompat-v7が通らなくなった場合
+    implementation 'com.android.support:animated-vector-drawable:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+//    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    testImplementation 'junit:junit:4.13-beta-2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation project(':nendSDK-5.1.0')
 }
